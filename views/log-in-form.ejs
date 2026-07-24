@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="PoistDrive Log-in"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= header %></h1>
+
+    <form action="/log-in" method="POST">
+      <p>
+        <label for="username">Username (email)</label>
+        <input
+          id="username"
+          name="username"
+          placeholder="example@gmail.com"
+          type="text"
+        />
+      </p>
+
+      <p>
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          placeholder="Enter password"
+          type="password"
+        />
+      </p>
+      <button type="submit">Log-in</button>
+    </form>
+  </body>
+</html>

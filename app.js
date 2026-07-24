@@ -4,7 +4,7 @@ const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
+const indexRouter = require("./routes/indexRouter.js");
 require("dotenv").config();
 
 const pool = new Pool({
@@ -20,7 +20,7 @@ app.use(session({ secret: "ape", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => res.render("home"));
+app.use("/", indexRouter);
 
 app.listen(3000, (error) => {
   if (error) {
