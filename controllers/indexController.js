@@ -1,7 +1,8 @@
 const db = require("../db/queries");
+const passport = require("passport");
 
 exports.indexGet = async (req, res) => {
-  res.render("home", { title: "PoistDrive Home" });
+  res.render("home", { user: req.user, title: "PoistDrive Home" });
 };
 
 exports.logInGet = async (req, res) => {
@@ -12,5 +13,27 @@ exports.signUpGet = async (req, res) => {
   res.render("sign-up-form", {
     title: "PoistDrive Sign-up",
     header: "Create an account",
+  });
+};
+
+exports.signUpPost = async (req, res, next) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
+      req.body.username,
+      hashedPassword,
+    ]);
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    return next(err);
+  }
+};
+
+exports.logInPost = async (req, res) => {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in",
+    failureMessage: true,
   });
 };
