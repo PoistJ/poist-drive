@@ -1,5 +1,7 @@
 const db = require("../db/queries");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
+const { prisma } = require("../lib/prisma.js");
 
 exports.indexGet = async (req, res) => {
   res.render("home", { user: req.user, title: "PoistDrive Home" });
@@ -19,10 +21,14 @@ exports.signUpGet = async (req, res) => {
 exports.signUpPost = async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    await pool.query("INSERT INTO users (username, password) VALUES ($1, $2)", [
-      req.body.username,
-      hashedPassword,
-    ]);
+
+    const user = await prisma.users.create({
+      data: {
+        email: req.body.username,
+        password: hashedPassword,
+      },
+    });
+
     res.redirect("/");
   } catch (err) {
     console.error(err);
@@ -30,7 +36,7 @@ exports.signUpPost = async (req, res, next) => {
   }
 };
 
-exports.logInPost = async (req, res) => {
+exports.logInPost = async () => {
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/log-in",

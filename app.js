@@ -9,7 +9,7 @@ const indexRouter = require("./routes/indexRouter.js");
 require("dotenv").config();
 
 const pool = new Pool({
-  connectionString: process.env.POOL_STRING,
+  connectionString: process.env.DATABASE_URL,
 });
 
 const app = express();
