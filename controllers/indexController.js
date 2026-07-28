@@ -1,4 +1,3 @@
-const db = require("../db/queries");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { prisma } = require("../lib/prisma.js");
