@@ -34,11 +34,3 @@ exports.signUpPost = async (req, res, next) => {
     return next(err);
   }
 };
-
-exports.logInPost = async () => {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/log-in",
-    failureMessage: true,
-  });
-};
