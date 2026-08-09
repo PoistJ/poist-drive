@@ -35,6 +35,15 @@ exports.signUpPost = async (req, res, next) => {
   }
 };
 
+exports.logOutGet = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
 exports.listGet = (req, res) => {
   res.render("list");
 };
@@ -57,8 +66,26 @@ exports.uploadGet = (req, res) => {
   res.render("upload");
 };
 
-exports.uploadPost = (req, res) => {
-  res.redirect("/");
-  console.log(req.file);
-  console.log(req.body);
+exports.uploadPost = async (req, res, next) => {
+  try {
+    const fileData = await prisma.users.update({
+      where: { id: req.user.id },
+      data: {
+        files: {
+          create: [
+            { folder: req.params.folder },
+            { filename: req.file.originalname },
+            { filesize: req.file.size },
+          ],
+        },
+      },
+    });
+
+    res.redirect("/");
+    console.log(req.file);
+    console.log(req.body);
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
 };

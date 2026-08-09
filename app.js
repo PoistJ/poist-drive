@@ -6,6 +6,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 const indexRouter = require("./routes/indexRouter.js");
+const userRouter = require("./routes/userRouter.js");
 const { prisma } = require("./lib/prisma.js");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 require("dotenv").config();
@@ -79,6 +80,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
+app.use("/user", userRouter);
 
 app.post(
   "/log-in",

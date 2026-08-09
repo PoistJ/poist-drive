@@ -7,5 +7,13 @@
 </head>
 <body>
     <h1><%= title %></h1>
+    <% if (!currentUser) { %>
+        <a href="/log-in">Log In</a>
+        <a href="/sign-up">Sign Up</a>
+    <% } else { %>
+        <p>Welcome back <% currentUser %>!</p>
+        <a href="/user/<%= currentUser.id %>">Your Drive</a>
+        <a href="/log-out">Log out</a>
+    <% } %>
 </body>
 </html>
