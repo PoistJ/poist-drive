@@ -34,3 +34,31 @@ exports.signUpPost = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.listGet = (req, res) => {
+  res.render("list");
+};
+
+exports.listPost = async (req, res, next) => {
+  try {
+    const uploadData = await prisma.list.create({
+      data: {
+        handle: req.body.handle,
+      },
+    });
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+};
+
+exports.uploadGet = (req, res) => {
+  res.render("upload");
+};
+
+exports.uploadPost = (req, res) => {
+  res.redirect("/");
+  console.log(req.file);
+  console.log(req.body);
+};

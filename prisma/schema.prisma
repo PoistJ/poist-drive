@@ -24,3 +24,15 @@ model Session {
   data String @db.Text
   expiresAt DateTime
 }
+
+model Files {
+  id Int @id @default(autoincrement())
+  filename String
+  filesize Int
+  filetype String
+}
+
+model List {
+  id Int @id @default(autoincrement())
+  handle String
+}
