@@ -65,27 +65,3 @@ exports.listPost = async (req, res, next) => {
 exports.uploadGet = (req, res) => {
   res.render("upload");
 };
-
-exports.uploadPost = async (req, res, next) => {
-  try {
-    const fileData = await prisma.users.update({
-      where: { id: req.user.id },
-      data: {
-        files: {
-          create: [
-            { folder: req.params.folder },
-            { filename: req.file.originalname },
-            { filesize: req.file.size },
-          ],
-        },
-      },
-    });
-
-    res.redirect("/");
-    console.log(req.file);
-    console.log(req.body);
-  } catch (err) {
-    console.log(err);
-    return next(err);
-  }
-};

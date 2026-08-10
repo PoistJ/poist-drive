@@ -1,7 +1,5 @@
 const { Router } = require("express");
 const indexController = require("../controllers/indexController");
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
 
 const indexRouter = Router();
 
@@ -21,12 +19,5 @@ indexRouter.post("/sign-up", indexController.signUpPost);
 indexRouter.get("/log-out", indexController.logOutGet);
 indexRouter.get("/list", indexController.listGet);
 indexRouter.post("/list", indexController.listPost);
-indexRouter.get("/upload", loggedIn, indexController.uploadGet);
-indexRouter.post(
-  "/upload",
-  loggedIn,
-  upload.single("fileUpload"),
-  indexController.uploadPost,
-);
 
 module.exports = indexRouter;

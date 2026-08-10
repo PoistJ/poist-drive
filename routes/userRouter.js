@@ -14,5 +14,13 @@ function loggedIn(req, res, next) {
 }
 
 userRouter.get("/:userId", loggedIn, userController.foldersGet);
+userRouter.get("/:userId/:folderId/upload", loggedIn, userController.uploadGet);
+userRouter.post(
+  "/:userId/:folderId/upload",
+  loggedIn,
+  upload.single("fileUpload"),
+  userController.uploadPost,
+);
+userRouter.get("/:userId/:folderId/", loggedIn, userController.filesGet);
 
 module.exports = userRouter;
